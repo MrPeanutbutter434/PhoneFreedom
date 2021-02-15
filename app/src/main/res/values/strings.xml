@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PhoneFreedom</string>
+    <string name="add_site">Add site</string>
+    <string-array name="timer_hours">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string name="time_picker_label_text">Hours</string>
+    <string name="timer_display">Hey there!</string>
+    <string name="timer_start">Start</string>
+</resources>
