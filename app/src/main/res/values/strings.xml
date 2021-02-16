@@ -14,4 +14,5 @@
     <string name="time_picker_label_text">Hours</string>
     <string name="timer_display">Hey there!</string>
     <string name="timer_start">Start</string>
+    <string name="app_picker">Focus apps</string>
 </resources>
