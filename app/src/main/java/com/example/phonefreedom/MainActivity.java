@@ -165,12 +165,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mActivity = MainActivity.this;
 
         mButton = findViewById(R.id.app_picker);
+
         mButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 // Get the widgets reference from XML layout
-                setContentView(R.layout.app_picker);
+                // setContentView(R.layout.app_picker);
                 mRelativeLayout = findViewById(R.id.app_picker_layout);
 
 
@@ -178,7 +179,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.app_picker, (ViewGroup) view.getParent());
+                // View customView = inflater.inflate(R.layout.app_picker, (ViewGroup) view.getParent(), false);
+                View customView = inflater.inflate(R.layout.app_picker, null);
+
 
                 // Initialize a new instance of popup window
                 mPopupWindow = new PopupWindow(
@@ -206,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 });
 
                 // Finally, show the popup window at the center location of root relative layout
-                mPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+                mPopupWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.CENTER,0,0);
             }
         });
     }
