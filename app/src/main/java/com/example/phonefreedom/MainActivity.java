@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private WindowManager windowManager;
     private ImageView imageView;
     private Context context;
-    private Button appPickerButton;
     private PopupWindow popupWindow;
 
 
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Get the application context
         context = getApplicationContext();
 
-        appPickerButton = findViewById(R.id.app_picker);
+        Button appPickerButton = findViewById(R.id.app_picker);
 
         appPickerButton.setOnClickListener(new View.OnClickListener() {
 
