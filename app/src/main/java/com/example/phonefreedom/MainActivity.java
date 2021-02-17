@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             public void overlayApproach2() {
                 WindowManager.LayoutParams windowManagerParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY ,
-                        WindowManager.LayoutParams. FLAG_DIM_BEHIND, PixelFormat.TRANSLUCENT);
+                        WindowManager.LayoutParams. FLAG_WATCH_OUTSIDE_TOUCH, PixelFormat.TRANSLUCENT);
 
                 WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 
@@ -119,6 +119,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 View myView = inflater.inflate(R.layout.activity_timeout_screen, null);
 
                 wm.addView(myView, windowManagerParams);
+            }
+
+            public void  overlayApproach3() {
+                Intent intent = new Intent(getApplicationContext(), TimeoutScreenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
