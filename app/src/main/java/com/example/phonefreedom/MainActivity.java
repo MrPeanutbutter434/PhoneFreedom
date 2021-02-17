@@ -5,12 +5,10 @@ package com.example.phonefreedom;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
@@ -24,7 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,29 +30,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private Spinner spinner;
     private int counter;
-    private int timeOut;
     private WindowManager windowManager;
     private ImageView imageView;
-    private Context mContext;
-    private RelativeLayout mRelativeLayout;
-    private Button mButton;
-    private PopupWindow mPopupWindow;
-    private Activity mActivity;
+    private Context context;
+    private Button appPickerButton;
+    private PopupWindow popupWindow;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         
         initSpinner();
         initButton();
         initAppPicker();
-
-        if (!Settings.canDrawOverlays(this)) {
-            askPermission();
-        }
     }
 
     @TargetApi(23)
@@ -70,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
 
-        this.timeOut = Integer.parseInt(parent.getItemAtPosition(pos).toString());
-        setTimer(this.timeOut);
+        int timeOut = Integer.parseInt(parent.getItemAtPosition(pos).toString());
+        setTimer(timeOut);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -159,42 +148,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initAppPicker() {
         // Get the application context
-        mContext = getApplicationContext();
+        context = getApplicationContext();
 
-        // Get the activity
-        mActivity = MainActivity.this;
+        appPickerButton = findViewById(R.id.app_picker);
 
-        mButton = findViewById(R.id.app_picker);
-
-        mButton.setOnClickListener(new View.OnClickListener() {
+        appPickerButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                // Get the widgets reference from XML layout
-                // setContentView(R.layout.app_picker);
-                mRelativeLayout = findViewById(R.id.app_picker_layout);
-
-
-                // Initialize a new instance of LayoutInflater service
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                // View customView = inflater.inflate(R.layout.app_picker, (ViewGroup) view.getParent(), false);
                 View customView = inflater.inflate(R.layout.app_picker, null);
 
 
                 // Initialize a new instance of popup window
-                mPopupWindow = new PopupWindow(
+                popupWindow = new PopupWindow(
                         customView,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 );
 
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
+
+                popupWindow.setElevation(5.0f);
+
 
                 // Get a reference for the custom view close button
                 Button closeButton = customView.findViewById(R.id.app_picker_close);
@@ -204,12 +181,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public void onClick(View view) {
                         // Dismiss the popup window
-                        mPopupWindow.dismiss();
+                        popupWindow.dismiss();
                     }
                 });
 
                 // Finally, show the popup window at the center location of root relative layout
-                mPopupWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.CENTER,0,0);
+                popupWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.CENTER,0,0);
             }
         });
     }
