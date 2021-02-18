@@ -10,11 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"/>
-    <TextView
-        android:id="@+id/display_list"
+    <ListView
+        android:id="@+id/list_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Display list of apps here"
-        android:layout_centerInParent="true"
-        android:padding="25sp"/>
+        android:layout_height="wrap_content" />
 </RelativeLayout>
