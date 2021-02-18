@@ -21,9 +21,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ImageView imageView;
     private Context context;
     private PopupWindow popupWindow;
+    private AppPickerAdapter adapter;
+    ListView listView;
+    ArrayList dataModel;
 
 
     @Override
@@ -85,41 +91,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                overlayApproach2();
+                overlayApproach3();
 
             }
 
-            public void overlayApproach1(View v) {
-                windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-
-                imageView = new ImageView(getApplicationContext());
-                imageView.setImageResource(R.drawable.ic_launcher_background);
-
-                WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                        WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.TYPE_PHONE,
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                        PixelFormat.TRANSLUCENT);
-
-                params.gravity = Gravity.TOP | Gravity.LEFT; // Orientation
-                params.x = 100; // where you want to draw this, coordinates
-                params.y = 100;
-
-                windowManager.addView(v, params);
-            }
-
-            public void overlayApproach2() {
-                WindowManager.LayoutParams windowManagerParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY ,
-                        WindowManager.LayoutParams. FLAG_WATCH_OUTSIDE_TOUCH, PixelFormat.TRANSLUCENT);
-
-                WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View myView = inflater.inflate(R.layout.activity_timeout_screen, null);
-
-                wm.addView(myView, windowManagerParams);
-            }
+            // TODO revisit this logic
+//            public void overlayApproach2() {
+//                WindowManager.LayoutParams windowManagerParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY ,
+//                        WindowManager.LayoutParams. FLAG_WATCH_OUTSIDE_TOUCH, PixelFormat.TRANSLUCENT);
+//
+//                WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+//
+//                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                View myView = inflater.inflate(R.layout.activity_timeout_screen, null);
+//
+//                wm.addView(myView, windowManagerParams);
+//            }
 
             public void  overlayApproach3() {
                 Intent intent = new Intent(getApplicationContext(), TimeoutScreenActivity.class);
@@ -166,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // Inflate the custom layout/view
                 View customView = inflater.inflate(R.layout.app_picker, null);
 
+                initListView();
 
                 // Initialize a new instance of popup window
                 popupWindow = new PopupWindow(
@@ -192,6 +180,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 // Finally, show the popup window at the center location of root relative layout
                 popupWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.CENTER,0,0);
+            }
+
+            public void initListView() {
+                listView = findViewById(R.id.list_view);
+
+                dataModel = new ArrayList<AppPickerDataModel>();
+
+                dataModel.add(new AppPickerDataModel("Apple Pie", false));
+                dataModel.add(new AppPickerDataModel("Banana Bread", false));
+
+                adapter = new AppPickerAdapter(dataModel, getApplicationContext());
+
+                listView.setAdapter(adapter);
             }
         });
     }
