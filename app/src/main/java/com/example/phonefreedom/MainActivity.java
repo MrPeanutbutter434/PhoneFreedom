@@ -153,8 +153,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // Inflate the custom layout/view
                 View customView = inflater.inflate(R.layout.app_picker, null);
 
-                initListView();
-
                 // Initialize a new instance of popup window
                 popupWindow = new PopupWindow(
                         customView,
@@ -180,10 +178,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 // Finally, show the popup window at the center location of root relative layout
                 popupWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.CENTER,0,0);
+
+                listView = customView.findViewById(R.id.list_view);
+                initListView();
             }
 
             public void initListView() {
-                listView = findViewById(R.id.list_view);
+
 
                 dataModel = new ArrayList<AppPickerDataModel>();
 
