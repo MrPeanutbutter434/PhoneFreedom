@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView listView;
     ArrayList dataModel;
 
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "You cannot leave", Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            while (this.counter != 0) {
+                // do nothing
+                System.out.println("Hello");
+            }
+            return false;
+        }
+
+        if(keyCode == KeyEvent.KEYCODE_APP_SWITCH) {
+            return false;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onFinish() {
                 timerDisplay.setText("Finished");
                 spinner.setEnabled(true);
+                counter = 0;
             }
         };
 
